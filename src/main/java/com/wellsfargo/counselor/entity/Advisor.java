@@ -1,10 +1,16 @@
 package com.wellsfargo.counselor.entity;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
 
 @Entity
 public class Advisor {
@@ -28,7 +34,10 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
-    protected Advisor() {
+     @OneToMany(mappedBy = "advisor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Client> clients = new HashSet<>();
+
+    public Advisor() {
 
     }
 
@@ -82,5 +91,23 @@ public class Advisor {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(Set<Client> clients) {
+        this.clients = clients;
+    }
+
+    public void addClient(Client client) {
+        clients.add(client);
+        client.setAdvisor(this);
+    }
+
+    public void removeClient(Client client) {
+        clients.remove(client);
+        client.setAdvisor(null);
     }
 }
