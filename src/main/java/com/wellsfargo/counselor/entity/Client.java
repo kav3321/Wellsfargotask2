@@ -7,32 +7,36 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Advisor {
+public class Client {
 
     @Id
-    @GeneratedValue()
-    private long advisorId;
+    @GenerativeValue()
+    private long clientID;
 
-    @Column(nullable = false)
-    private String firstName;
+    @Column(nullable=false)
+    private string firstName
 
-    @Column(nullable = false)
-    private String lastName;
+    @Column(nullable=false)
+    private string lastName
 
-    @Column(nullable = false)
-    private String address;
+    @Column(nullable=false)
+    private string address
 
-    @Column(nullable = false)
-    private String phone;
+    @Column(nullable=false)
+    private string phone
 
-    @Column(nullable = false)
-    private String email;
+    @Column(nullable=false)
+    private string email
+
+    @ManyToONe
+    @JoinColum(name = "advisorId", nullable=false)
+    private Advisor advisor;
 
     protected Advisor() {
 
     }
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
+    public Client(String firstName, String lastName, String address, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -40,15 +44,15 @@ public class Advisor {
         this.email = email;
     }
 
-    public Long getAdvisorId() {
-        return advisorId;
+    public Long getCLientID() {
+        return clientId;
     }
 
-    public String getirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setfirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -56,7 +60,7 @@ public class Advisor {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(string lastName) {
         this.lastName = lastName;
     }
 
@@ -76,11 +80,20 @@ public class Advisor {
         this.phone = phone;
     }
 
-    public String getEmail() {
+    public String get Email() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Advisor getAdvisor(){
+        return advisor;
+    }
+
+    public void setAdvisor(Advisor advisor) {
+        this.advisor = advisor;
+    }
+
 }
