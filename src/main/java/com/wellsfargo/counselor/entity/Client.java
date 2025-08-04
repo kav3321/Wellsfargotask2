@@ -1,17 +1,18 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
-public class Advisor {
+public class Client {
 
     @Id
-    @GeneratedValue()
-    private long advisorId;
+    @GeneratedValue
+    private long clientId;
+
+    @ManyToOne
+    @JoinColumn(name = "advisorId", nullable = false)
+    private Advisor advisorId;
 
     @Column(nullable = false)
     private String firstName;
@@ -28,20 +29,25 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "advisorId", cascade = CascadeType.ALL, orphanRemoval = false)
-    private final List<Client> clients;
-
-    public Advisor(String firstName, String lastName, String address, String phone, String email, List<Client> clients) {
+    public Client(String firstName, String lastName, String address, String phone, String email, Advisor advisorId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.clients = clients;
+        this.advisorId = advisorId;
     }
 
-    public Long getAdvisorId() {
+    public long getClientId() {
+        return clientId;
+    }
+
+    public Advisor getAdvisorId() {
         return advisorId;
+    }
+
+    public void setAdvisorId(Advisor advisorId) {
+        this.advisorId = advisorId;
     }
 
     public String getFirstName() {
@@ -82,12 +88,5 @@ public class Advisor {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void addClient(Client client) {
-        clients.add(client);
-
-    }     public void removeClient(Client client) {
-        clients.remove(client);
     }
 }
