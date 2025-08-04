@@ -3,6 +3,8 @@ package com.wellsfargo.counselor.entity;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Entity
 public class Client {
 
@@ -10,6 +12,7 @@ public class Client {
     @GeneratedValue
     private long clientId;
 
+    @Column
     @ManyToOne
     @JoinColumn(name = "advisorId", nullable = false)
     private Advisor advisorId;
@@ -29,13 +32,17 @@ public class Client {
     @Column(nullable = false)
     private String email;
 
-    public Client(String firstName, String lastName, String address, String phone, String email, Advisor advisorId){
+    @OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Portfolio> portfolios;
+
+    public Client(String firstName, String lastName, String address, String phone, String email, Advisor advisorId, List<Portfolio> portfolios){
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.advisorId = advisorId;
+        this.portfolios = portfolios;
     }
 
     public long getClientId() {
@@ -89,4 +96,16 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<Portfolio> getPortfolios() {
+        return portfolios;
+    }
+
+    public void addPortfolio(Portfolio portfolio){
+        this.portfolios.add(portfolio);
+    }
+
+     public void removePortfolio(Portfolio portfolio){
+        this.portfolios.remove(portfolio);
+     }
 }
