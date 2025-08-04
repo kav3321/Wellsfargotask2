@@ -1,17 +1,22 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Advisor {
+public class Client {
 
     @Id
-    @GeneratedValue()
-    private long advisorId;
+    @GeneratedValue
+    private long clientId;
+
+    @Column
+    @ManyToOne
+    @JoinColumn(name = "advisorId", nullable = false)
+    private Advisor advisorId;
 
     @Column(nullable = false)
     private String firstName;
@@ -28,19 +33,28 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "advisorId", cascade = CascadeType.ALL, orphanRemoval = false)
-    private final List<Client> clients = new ArrayList<>();
+    @OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Portfolio> portfolios = new ArrayList<>();
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
+    public Client(String firstName, String lastName, String address, String phone, String email, Advisor advisorId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.advisorId = advisorId;
     }
 
-    public Long getAdvisorId() {
+    public long getClientId() {
+        return clientId;
+    }
+
+    public Advisor getAdvisorId() {
         return advisorId;
+    }
+
+    public void setAdvisorId(Advisor advisorId) {
+        this.advisorId = advisorId;
     }
 
     public String getFirstName() {
@@ -83,15 +97,15 @@ public class Advisor {
         this.email = email;
     }
 
-    public void addClient(Client client) {
-        clients.add(client);
+    public List<Portfolio> getPortfolios() {
+        return portfolios;
     }
 
-    public void removeClient(Client client) {
-        clients.remove(client);
+    public void addPortfolio(Portfolio portfolio){
+        this.portfolios.add(portfolio);
     }
 
-    public List<Client> getClients(){
-        return clients;
-    }
+     public void removePortfolio(Portfolio portfolio){
+        this.portfolios.remove(portfolio);
+     }
 }
