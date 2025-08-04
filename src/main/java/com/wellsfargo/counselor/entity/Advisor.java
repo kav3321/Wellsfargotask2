@@ -29,15 +29,14 @@ public class Advisor {
     private String email;
 
     @OneToMany(mappedBy = "advisorId", cascade = CascadeType.ALL, orphanRemoval = false)
-    private final List<Client> clients;
+    private final List<Client> clients = new ArrayList<>();
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email, List<Client> clients) {
+    public Advisor(String firstName, String lastName, String address, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.clients = clients;
     }
 
     public Long getAdvisorId() {

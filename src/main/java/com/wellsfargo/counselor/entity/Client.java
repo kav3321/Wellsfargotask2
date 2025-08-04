@@ -3,6 +3,7 @@ package com.wellsfargo.counselor.entity;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,16 +34,15 @@ public class Client {
     private String email;
 
     @OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<Portfolio> portfolios;
+    private final List<Portfolio> portfolios = new ArrayList<>();
 
-    public Client(String firstName, String lastName, String address, String phone, String email, Advisor advisorId, List<Portfolio> portfolios){
+    public Client(String firstName, String lastName, String address, String phone, String email, Advisor advisorId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.advisorId = advisorId;
-        this.portfolios = portfolios;
     }
 
     public long getClientId() {

@@ -2,7 +2,9 @@ package com.wellsfargo.counselor.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Portfolio {
@@ -20,6 +22,9 @@ public class Portfolio {
 
     @Column
     private Date updatedAt;
+
+    @OneToMany(mappedBy = "portfolioId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Security> securities = new ArrayList<>();
 
     public Portfolio(long portfolioId, Client clientId, Date createdAt){
         this.portfolioId = portfolioId;
@@ -49,5 +54,17 @@ public class Portfolio {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Security> getSecurities() {
+        return securities;
+    }
+
+    public void addSecurity(Security security){
+        securities.add(security);
+    }
+
+    public void removeSecurity(Security security){
+        securities.remove(security);
     }
 }
