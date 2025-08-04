@@ -16,8 +16,38 @@ public class Portfolio {
     private Client clientId;
 
     @Column(nullable = false)
-    private Date createdAt;
+    private final Date createdAt;
 
     @Column
     private Date updatedAt;
+
+    public Portfolio(long portfolioId, Client clientId, Date createdAt){
+        this.portfolioId = portfolioId;
+        this.clientId = clientId;
+        this.createdAt = createdAt;
+    }
+
+    public long getPortfolioId() {
+        return portfolioId;
+    }
+
+    public Client getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Client clientId) {
+        this.clientId = clientId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
