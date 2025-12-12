@@ -3,6 +3,8 @@ package com.wellsfargo.counselor.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Portfolio {
@@ -27,6 +29,8 @@ public class Portfolio {
     @Column(nullable = false)
     private LocalDate createdAt;
 
+    @OneToMany(mappedBy = "portfolio")
+    private List<Security> securities;
 
     protected Portfolio() {
     }
@@ -34,6 +38,8 @@ public class Portfolio {
     public Portfolio(Client client, String name) {
         this.client = client;
         this.name = name;
+        this.createdAt=LocalDate.now();
+        this.securities= new ArrayList<>();
     }
 
     public long getPortfolioId() {
@@ -74,5 +80,13 @@ public class Portfolio {
 
     public void setTotalValue(double totalValue) {
         this.totalValue = totalValue;
+    }
+
+    public List<Security> getSecurities() {
+        return securities;
+    }
+
+    public void setSecurities(List<Security> securities) {
+        this.securities = securities;
     }
 }
