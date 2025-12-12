@@ -33,7 +33,7 @@ public class Client {
      * Keep track of who created the clients profile
      * **/
     @ManyToOne
-    @JoinColumn(name = "advisorId")
+    @JoinColumn(name = "createdByAdvisorId")
     private Advisor createdBy;
 
     /**
@@ -43,13 +43,13 @@ public class Client {
     @JoinColumn(name = "advisorId")
     private Advisor advisor;
 
-    public Client(String firstName, String lastName, String address, String phone, String email, LocalDate createdAt, Advisor createdBy, Advisor advisor) {
+    public Client(String firstName, String lastName, String address, String phone, String email, Advisor createdBy, Advisor advisor) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.createdAt = createdAt;
+        this.createdAt = LocalDate.now();
         this.createdBy = createdBy;
         this.advisor = advisor;
     }
