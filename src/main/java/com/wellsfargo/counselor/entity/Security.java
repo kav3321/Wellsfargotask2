@@ -16,7 +16,7 @@ public class Security {
     private Portfolio portfolio;
 
     @Column(nullable = false)
-    private String portfolioName;
+    private String name;
 
     @Column(nullable = false)
     private LocalDate purchaseDate;
@@ -33,12 +33,13 @@ public class Security {
     protected Security() {
     }
 
-    public Security(Portfolio portfolio, String portfolioName, double purchasePrice, int quantity, String category) {
+    public Security(Portfolio portfolio, String name, double purchasePrice, int quantity, String category) {
         this.portfolio = portfolio;
-        this.portfolioName = portfolioName;
+        this.name = name;
         this.purchasePrice = purchasePrice;
         this.quantity = quantity;
         this.category = category;
+        this.purchaseDate= LocalDate.now();
     }
 
     public long getSecurityId() {
@@ -49,8 +50,8 @@ public class Security {
         return portfolio;
     }
 
-    public String getPortfolioName() {
-        return portfolioName;
+    public String getName() {
+        return name;
     }
 
     public LocalDate getPurchaseDate() {
@@ -73,8 +74,8 @@ public class Security {
         this.portfolio = portfolio;
     }
 
-    public void setPortfolioName(String portfolioName) {
-        this.portfolioName = portfolioName;
+    public void setName(String portfolioName) {
+        this.name = portfolioName;
     }
 
     public void setPurchasePrice(double purchasePrice) {
