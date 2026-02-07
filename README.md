@@ -60,3 +60,4 @@ Each entity class was implemented according to the following rules:
 - Entity classes are placed in the `entities` directory
 
 Existing entities in the project were used as references to ensure consistency and correctness.
+> *Note: Modifications were made to Advisor class in new branch to match my ERD diagram.*
