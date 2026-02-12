@@ -1,2 +1,4 @@
-# Task 2 Starter Repo
-Contains Everything you need to get started on task 2 of Forage's Wells Fargo software engineering program
+# Task 2 Model Answer
+Model answer for task 2 of the Wells Fargo Software Development Forage program
+
+Author: Ashik Sharon M
