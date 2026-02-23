@@ -1,10 +1,12 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 public class Advisor {
@@ -28,10 +30,16 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
+    // RELATIONSHIP: One advisor has many clients
+    @OneToMany(mappedBy = "advisor")
+    private List<Client> clients;
+
+    // Default constructor (required by JPA)
     protected Advisor() {
 
     }
 
+    // Constructor
     public Advisor(String firstName, String lastName, String address, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,7 +48,9 @@ public class Advisor {
         this.email = email;
     }
 
-    public Long getAdvisorId() {
+    // Getters and setters
+
+    public long getAdvisorId() {
         return advisorId;
     }
 
@@ -82,5 +92,13 @@ public class Advisor {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 }
