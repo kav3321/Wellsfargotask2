@@ -1,16 +1,15 @@
 package com.wellsfargo.counselor.entity;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Advisor {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue
     private long advisorId;
 
     @Column(nullable = false)
@@ -19,25 +18,25 @@ public class Advisor {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
-    private String address;
-
-    @Column(nullable = false)
-    private String phone;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    protected Advisor() {
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "advisor", cascade = CascadeType.ALL)
+    private List<Client> clients;
+
+    protected Advisor() {
     }
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
+    // Initializes all instance variables (as required)
+    public Advisor(String firstName, String lastName, String email, LocalDateTime createdAt, List<Client> clients) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
         this.email = email;
+        this.createdAt = createdAt;
+        this.clients = (clients != null) ? clients : new ArrayList<>();
     }
 
     public Long getAdvisorId() {
@@ -60,27 +59,27 @@ public class Advisor {
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = (clients != null) ? clients : new ArrayList<>();
     }
 }
